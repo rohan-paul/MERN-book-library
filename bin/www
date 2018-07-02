@@ -43,7 +43,6 @@ server.on('listening', onListening);
 // Normalize a port into a number, string, or false.
 
 normalizePort = val => {
-
   let port = parseInt(val, 10);
 
   if (isNaN(port)) {
@@ -58,3 +57,49 @@ normalizePort = val => {
 
   return false;
 }
+
+onError = error => {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  let bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port' + port;
+
+     // handle specific listen errors with friendly messages
+     switch(error.code) {
+      case 'EACCESS' :
+          console.error(bind + ' require elevated privileges');
+          process.exit(1);
+      case 'EADDRINUSE':
+          console.error(bind + ' is already in use')
+          process.exit(1);
+          break;
+      default:
+          throw error;
+     }
+}
+
+// Event listener for HTTP server "listening" event.
+onListening = () => {
+  let addr = server.address();
+  let bind = typeof addr === 'string'
+    ? 'pipe' + addr
+    : 'port' + addr.port;
+
+  debug('Listening on  ' + bind)
+}
+
+/* server.address() - official-doc -   https://nodejs.org/docs/latest-v9.x/api/net.html#net_server_address
+
+https://github.com/nodejs/node/issues/12895
+
+According to the documentation server.address() should return an object with port, family, and address properties
+{ port: 12346, family: 'IPv4', address: '127.0.0.1' }
+
+But if I call it on a HTTP server connected via windows pipe (on IIS Node on Windows Azure) I get a plain string telling the pipe name.
+
+Useful to find which port was assigned when getting an OS-assigned address.
+
+*/
