@@ -1,0 +1,60 @@
+#!/usr/bin/env node
+
+/**
+WHY I NEED THIS /bin/www file here -
+
+https://stackoverflow.com/questions/36638123/learning-node-js-express-js-whats-the-deal-with-bin-www?rq=1
+
+app.js
+contains all the middleware(body-parser,morgan,etc) and routes.
+it exports app object at the last.
+www
+here it creates a httpServer and passes app as the handler
+var server = http.createServer(app);
+besides also sets the port server.listen(port);
+also sets the functions to be called if there is an error while starting the server: server.on('error', onError);
+Explanation so, basically it removes all the create and start server code from your app.js and let you focus only on the application logic part. Note: If you see in package.json file you would note this:
+"scripts": {
+  "start": "node ./bin/www"
+}
+
+this means if you type in terminal npm start then it will automatically start the ./bin/www file.
+
+ */
+
+let app = require('../app');
+let debug = require('debug')('mern-app:server');
+let http = require('http');
+
+// Get port from environment and store in Express. This normalizePort() function I am defining below.
+
+let port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+// Create HTTP server.
+
+let server = http.createServer(app);
+
+// Listen on provided port, on all network interfaces.
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+// Normalize a port into a number, string, or false.
+
+normalizePort = val => {
+
+  let port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // so this is then regular port number hence return accordingly
+    return port;
+  }
+
+  return false;
+}
