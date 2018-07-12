@@ -3,24 +3,25 @@ const mongoose = require('mongoose');
 const path = require('path');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
+const app = express();
 
 // By requiring the bluebird module I promisify the entire MongoDB module. Meaning,bluebird will ensure that each and every method defined in the MongoDB library returns a promise. ( more explanation - https://www.guru99.com/bluebird-promises.html)
 
 mongoose.Promise = require('bluebird');
 
 // For setting the options for .connect - http://mongoosejs.com/docs/connections.html
+mongoose.connect('mongodb://localhost/mern-crud', { promiseLibrary: require('bluebird') })
+  .then(() => console.log('Mongodb connection successful'))
+  .catch(err => console.error(err));
 
-mongoose.connect('mongodb://localhost:27017/mern-crud', { useMongoClient: true, promiseLibrary: require('bluebird') })
-  .then(() =>  console.log('connection successful'))
-  .catch((err) => console.error(err));
-
-var book = require('./routes/book');
-var app = express();
+const book = ('./routes/book')
 
 app.use(logger('dev'));
+
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({'extended':'false'}));
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(bodyParser.urlencoded({ 'extended' : 'false'}))
+
+app.use(express.static(path.join(__dirname, 'build')))
 
 app.use('/api/book', book);
 

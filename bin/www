@@ -25,23 +25,9 @@ let app = require('../app');
 let debug = require('debug')('mern-app:server');
 let http = require('http');
 
-// Get port from environment and store in Express. This normalizePort() function I am defining below.
+// Normalize a port into a number, string, or false. Also, I have to declare and define these three functions, normalizePort, onError and onListening - here, i.e. before invoking them. Otherwise was getting error that the function not defined.
 
-let port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
-
-// Create HTTP server.
-
-let server = http.createServer(app);
-
-// Listen on provided port, on all network interfaces.
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
-
-// Normalize a port into a number, string, or false.
-
-normalizePort = val => {
+const normalizePort = val => {
   let port = parseInt(val, 10);
 
   if (isNaN(port)) {
@@ -57,7 +43,7 @@ normalizePort = val => {
   return false;
 }
 
-onError = error => {
+const onError = error => {
   if (error.syscall !== 'listen') {
     throw error;
   }
@@ -81,7 +67,7 @@ onError = error => {
 }
 
 // Event listener for HTTP server "listening" event.
-onListening = () => {
+const onListening = () => {
   let addr = server.address();
   let bind = typeof addr === 'string'
     ? 'pipe' + addr
@@ -89,6 +75,23 @@ onListening = () => {
 
   debug('Listening on  ' + bind)
 }
+
+// Get port from environment and store in Express. This normalizePort() function I am defining below.
+
+let port = normalizePort(process.env.PORT || '3000');
+
+app.set('port', port);
+
+// Create HTTP server.
+
+let server = http.createServer(app);
+
+// Listen on provided port, on all network interfaces.
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+
 
 /* server.address() - official-doc -   https://nodejs.org/docs/latest-v9.x/api/net.html#net_server_address
 
