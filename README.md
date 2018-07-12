@@ -1,5 +1,7 @@
 Small MERN app for a book-cataloging service with basic functionalities of adding / editing / deleting books to the catalog.
 
+This app has been bootstrapped with create-react-app
+
 To run this app:
 
 * Clone this repo
