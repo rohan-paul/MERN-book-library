@@ -3,7 +3,7 @@
 /**
 WHY I NEED THIS /bin/www file here -
 
-https://stackoverflow.com/questions/36638123/learning-node-js-express-js-whats-the-deal-with-bin-www?rq=1
+A> https://stackoverflow.com/questions/36638123/learning-node-js-express-js-whats-the-deal-with-bin-www?rq=1
 
 app.js contains all the middleware(body-parser,morgan,etc) and routes.
 it exports app object at the last.
@@ -18,6 +18,8 @@ Explanation so, basically it removes all the create and start server code from y
 }
 
 this means if you type in terminal npm start then it will automatically start the ./bin/www file.
+
+B>  It also defines a startup script that will call the application entry point, the JavaScript file /bin/www. This sets up some of the application error handling and then loads app.js to do the rest of the work.
 
  */
 
