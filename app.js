@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 
@@ -10,19 +11,28 @@ mongoose.Promise = require('bluebird');
 
 // For setting the options for .connect - http://mongoosejs.com/docs/connections.html
 
-mongoose.connect('mongodb://localhost:27017/mern-crud', { useMongoClient: true, promiseLibrary: require('bluebird') })
+mongoose.connect('mongodb://localhost:27017/mern-crud', {promiseLibrary: require('bluebird') })
   .then(() =>  console.log('connection successful'))
   .catch((err) => console.error(err));
+
+// Alternative boilerplate code to connect to mongodb, assuming I only had locally installed mongo (i.e. no mLab) - just un-comment the below line
+// mongoose.connect('mongodb://localhost/my-database-name-for-this-project')
 
 var book = require('./routes/book');
 var app = express();
 
-app.use(logger('dev'));
+// // view engine setup - Once the app instance is created, the templating engine is set up for rendering views. This is where I would change the path to my view files if I wanted.
+// app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
 
+app.use(logger('dev'));
+app.use(express.json());
+
+//Below line handles when JSON is sent via POST request and it puts this data in request.body.
 app.use(bodyParser.json());
-//The above line handles when JSON is sent via POST request and it puts this data in request.body.
+
+// Below line parses query string data in the URL (e.g. /profile?id=5) and puts this in request.query.
 app.use(bodyParser.urlencoded({'extended':'false'}));
-// The above line parses query string data in the URL (e.g. /profile?id=5) and puts this in request.query.
 
 app.use(express.static(path.join(__dirname, 'build')));
 // This middleware serves static assets from your public folder. If I want to rename or move the public folder, I can change the path here.
