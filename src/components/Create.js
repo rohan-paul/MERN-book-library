@@ -24,12 +24,61 @@ class Create extends Component {
     this.setState(state);
   }
 
+  onSubmit = (e) => {
+    e.preventDefault();
 
+    const { isbn, title, author, description, published_year, publisher } = this.state;
+
+    axios.post('/api/book', { isbn, title, author, description, published_year, publisher })
+      .then(result => {
+        this.props.history.push('/')
+      })
+  }
 
   render() {
-    return (
-      <div>
 
+    const { isbn, title, author, description, published_year, publisher } = this.state;
+
+    return (
+      <div class="container">
+        <div className="panel panel-default">
+          <div className="panel-heading">
+            <h3 className="panel-title">
+              ADD BOOK
+            </h3>
+          </div>
+          <div className="panel-body">
+            <h4><Link to="/"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>Book List</Link></h4>
+            <form onSubmit={this.onSubmit}>
+              <div className="form-group">
+                <label for="isbn">ISBN:</label>
+                <input type="text" className="form-control" name="isbn" value={isbn} onChange={this.onChange} placeholder="ISBN" />
+              </div>
+              <div className="form-group">
+                <label for="title">Title:</label>
+                <input type="text" className="form-control" name="title" value={title} onChange={this.onChange} placeholder="Title" />
+              </div>
+              <div class="form-group">
+                <label for="author">Author:</label>
+                <input type="text" class="form-control" name="author" value={author} onChange={this.onChange} placeholder="Author" />
+              </div>
+              <div class="form-group">
+                <label for="description">Description:</label>
+                <textArea class="form-control" name="description" onChange={this.onChange} placeholder="Description" cols="80" rows="3">{description}</textArea>
+              </div>
+              <div class="form-group">
+                <label for="published_date">Published Date:</label>
+                <input type="number" class="form-control" name="published_year" value={published_year} onChange={this.onChange} placeholder="Published Year" />
+              </div>
+              <div class="form-group">
+                <label for="publisher">Publisher:</label>
+                <input type="text" class="form-control" name="publisher" value={publisher} onChange={this.onChange} placeholder="Publisher" />
+              </div>
+            </form>
+          </div>
+
+
+        </div>
       </div>
     );
   }
@@ -62,12 +111,19 @@ C> I am setting e.target.name which is currently "isbn" in this specific form-co
 
 Another implementation of the same onChange() function - /home/paul/codes-Lap/React/React-snippets/redux-show-list-of-micro-blog-posts/src/components/PostForm-before-Redux.js
 
-2> Explanation < this.props.history.push("/") >
+2> Explanation < this.props.history.push("/") >  Official Doc - https://reacttraining.com/react-router/core/api/history
 
-https://reacttraining.com/react-router/core/api/history
-
-3>  https://tylermcginnis.com/react-router-programmatically-navigate/
+https://tylermcginnis.com/react-router-programmatically-navigate/
 
 The real work horse of React Router is the History library. Under the hood it’s what’s keeping track of session history for React Router. When a component is rendered by React Router, that component is passed three different props: location, match, and history. This history prop comes from the History library and has a ton of fancy properties on it related to routing. In this case, the one we’re interested is history.push. What it does is it pushes a new entry onto the history stack - aka redirecting the user to another route.
+
+Most obvious implementation will be in a handleClick or onSubmit - after clicking / submitting get redirected to a new URL and also simultaneously adds this page to browser history
+
+https://gist.github.com/eduard-tkv/94592d77a047c1242c7be9a9fd39e439
+
+handleClick(e) {
+    e.preventDefault()
+    this.props.history.push('/redirected');
+  }
 
 */
