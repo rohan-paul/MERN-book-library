@@ -11,7 +11,7 @@ mongoose.Promise = require('bluebird');
 
 // For setting the options for .connect - http://mongoosejs.com/docs/connections.html
 
-mongoose.connect('mongodb://localhost:27017/mern-crud', {promiseLibrary: require('bluebird') })
+mongoose.connect('mongodb://localhost:27017/mern-book-library', {promiseLibrary: require('bluebird') })
   .then(() =>  console.log('mongodb connection successful'))
   .catch((err) => console.error(err));
 

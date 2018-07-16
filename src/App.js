@@ -20,6 +20,7 @@ class App extends Component {
         console.log(this.state.books);
       })
   }
+  // In the above, within setState, I am setting the books variable's value to a variable res.data.
 
   render() {
     return (
