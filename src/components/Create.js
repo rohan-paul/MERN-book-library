@@ -113,7 +113,11 @@ Another implementation of the same onChange() function - /home/paul/codes-Lap/Re
 
 2> Explanation < this.props.history.push("/") >  Official Doc - https://reacttraining.com/react-router/core/api/history
 
-https://tylermcginnis.com/react-router-programmatically-navigate/
+ A> after taking an action like creating a new book, I can change the url by using the history object that is supplied to our component as props. So a call to history.push('/') changes the url to '/' .
+
+ https://learn.co/lessons/react-router-params
+
+B> https://tylermcginnis.com/react-router-programmatically-navigate/
 
 The real work horse of React Router is the History library. Under the hood it’s what’s keeping track of session history for React Router. When a component is rendered by React Router, that component is passed three different props: location, match, and history. This history prop comes from the History library and has a ton of fancy properties on it related to routing. In this case, the one we’re interested is history.push. What it does is it pushes a new entry onto the history stack - aka redirecting the user to another route.
 
