@@ -90,7 +90,7 @@ class Edit extends Component {
                 <label for="publisher">Publisher:</label>
                 <input type="text" class="form-control" name="publisher" value={this.state.book.publisher} onChange={this.onChange} placeholder="Publisher" />
               </div>
-              <button type="submit" className="btn btn-default"></button>
+              <button type="submit" class="btn btn-default">Submit</button>
             </form>
           </div>
         </div>

@@ -1,9 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors')
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
+
 
 // By requiring the bluebird module I promisify the entire MongoDB module. Meaning,bluebird will ensure that each and every method defined in the MongoDB library returns a promise. ( more explanation - https://www.guru99.com/bluebird-promises.html)
 
@@ -20,6 +22,8 @@ mongoose.connect('mongodb://localhost:27017/mern-book-library', {promiseLibrary:
 
 var bookRoutes = require('./routes/book');
 var app = express();
+
+app.use(cors())
 
 // // view engine setup - Once the app instance is created, the templating engine is set up for rendering views. This is where I would change the path to my view files if I wanted.
 // app.set('views', path.join(__dirname, 'views'))

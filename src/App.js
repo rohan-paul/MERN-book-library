@@ -4,6 +4,7 @@ import { Link, BrowserRouter, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 
 
+
 class App extends Component {
 
   constructor(props) {
@@ -24,39 +25,37 @@ class App extends Component {
 
   render() {
     return (
-      <BrowserRouter>
-      <div className="container">
-        <div className="panel panel-default">
-          <div className="panel-heading">
-            <h3 className="panel-title">
-              BOOK CATALOG
+      
+        <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            <h3 class="panel-title">
+                BOOK CATALOG
             </h3>
-          </div>
-          <div class="panel-body">
-          <h4><Link to="/create"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Add Book</Link></h4>
-          <table class="table table-stripe">
-              <thead>
+            </div>
+            <div class="panel-body">
+            <h4><Link to="/create"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Book</Link></h4>
+            <table class="table table-stripe">
+                <thead>
                 <tr>
-                  <th>ISBN</th>
-                  <th>Title</th>
-                  <th>Author</th>
+                    <th>ISBN</th>
+                    <th>Title</th>
+                    <th>Author</th>
                 </tr>
-              </thead>
-            <tbody>
-            {this.state.books.map(book =>
-              <tr>
-                <td><Link to={`/show/${book._id}`}>{book.isbn}</Link></td>
-                <td>{book.title}</td>
-                <td>{book.author}</td>
-              </tr>
-            )}
-
-            </tbody>
-          </table>
-          </div>
+                </thead>
+                <tbody>
+                {this.state.books.map(book =>
+                    <tr>
+                        <td><Link to={`/show/${book._id}`}>{book.isbn}</Link></td>
+                        <td>{book.title}</td>
+                        <td>{book.author}</td>
+                    </tr>
+                )}
+                </tbody>
+            </table>
+            </div>
         </div>
-      </div>
-      </BrowserRouter>
+        </div>        
     );
   }
 }

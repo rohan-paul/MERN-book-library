@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 // import '../node_modules/bootstrap/dist/css/bootstrap-theme.min.css';
 import './index.css';
@@ -11,14 +11,16 @@ import Show from './components/Show'
 import Create from './components/Create'
 
 ReactDOM.render(
-  <Router>
-    <div>
-    <Route exact path='/' component={App}></Route>
-    <Route path='/edit/:id' component={Edit}></Route>
-    <Route path='/create' component={Create}></Route>
-    <Route path='/show/:id' component={Show}></Route>
-    </div>
-  </Router>,
-  document.getElementById('root')
-);
-registerServiceWorker();
+    <Router>
+        <Switch>
+        <div>
+          <Route exact path='/' component={App}></Route>
+          <Route path='/edit/:id' component={Edit}></Route>
+          <Route path='/create' component={Create}></Route>
+          <Route path='/show/:id' component={Show}></Route>
+        </div>
+        </Switch>
+    </Router>,
+    document.getElementById('root')
+  );
+  registerServiceWorker();
