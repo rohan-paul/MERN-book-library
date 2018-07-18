@@ -36,11 +36,21 @@ router.put('/:id', (req, res, next) => {
 });
 
 // Delete Book
+
+router.delete('/:id', (req, res) => {
+    Book.findById(req.params.id)
+      .then(book => book.remove().then(() => res.json({ success: true })))
+      .catch(err => res.status(404).json({ success: false }))
+  })
+
+/*  The below code with findBYIdAndRemove was not able to delete the book from database.
+Hence changed to above with only findById and the remove()
+
 router.delete('/:id', (req, res, next) => {
   Book.findByIdAndRemove(req.params.id, req.body, (err, post) => {
     if (err) return next(err);
     res.json(post);
   });
-});
+}); */
 
 module.exports = router;
