@@ -2,23 +2,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors')
 const path = require('path');
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 
 
-// By requiring the bluebird module I promisify the entire MongoDB module. Meaning,bluebird will ensure that each and every method defined in the MongoDB library returns a promise. ( more explanation - https://www.guru99.com/bluebird-promises.html)
-
-mongoose.Promise = require('bluebird');
-
 // For setting the options for .connect - http://mongoosejs.com/docs/connections.html
-
-mongoose.connect('mongodb://localhost:27017/mern-book-library', {promiseLibrary: require('bluebird') })
+// mongodb database connection (standard boilerplate mongo connection code)
+mongoose.connect('mongodb://localhost:27017/mern-book-library', {useNewUrlParser: true})
   .then(() =>  console.log('mongodb connection successful'))
   .catch((err) => console.error(err));
-
-// Alternative boilerplate code to connect to mongodb, assuming I only had locally installed mongo (i.e. no mLab) - just un-comment the below line
-// mongoose.connect('mongodb://localhost/my-database-name-for-this-project')
 
 var bookRoutes = require('./routes/book');
 var app = express();
